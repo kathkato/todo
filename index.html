@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html ng-app="todoApp">
+
+<head>
+
+  <title>ToDo App</title>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.3/angular.min.js"></script>
+  <script src="js/app.js"></script>
+  <link rel="stylesheet" href="css/todo.css">
+  <link rel="stylesheet" href="http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+
+</head>
+
+<body>
+
+  <header class="app-header">
+    <div class="container">
+      <a class="app-button button-left">
+        <i class="ion-android-menu"></i>
+      </a>
+      <div class="app-title">
+        <h4>
+          My Tasks
+        </h4>
+      </div>
+      <a class="app-button button-right">
+       <i class="ion-android-settings"></i>
+      </a>
+    </div>
+  </header>
+
+   <section class="app-section">
+    <div class="container">
+      <div ng-controller="TodoListController as todoList">
+        <span ng-show="todoList.todos.length">
+          {{todoList.remaining()}} of {{todoList.todos.length}} remaining
+        </span>
+        <ul class="list-group">
+          <li class="list-group-item custom-checkbox" ng-repeat="todo in todoList.todos">
+            <label class="checkbox">
+              <input type="checkbox" ng-model="todo.done">
+              <span class="label-text done-{{todo.done}}">
+                {{todo.text}}
+              </span>
+              <a class="close" href="" ng-show="todo.done" ng-click="todoList.archive()">
+                <i class="ion-android-close"></i>
+              </a>
+            </label>
+          </li>
+        </ul>
+        <div id="task-message" ng-show="!todoList.todos.length">
+          <h4>
+            Nothing to do right now.
+          </h4>
+        </div>
+        <form ng-submit="todoList.addTodo()" name="newTodo">
+          <input type="text" ng-model="todoList.todoText" size="40" placeholder="What should I do today?" maxlength="75" required>
+          <button class="btn-add" type="submit" ng-disabled="newTodo.$invalid">
+            <i class="ion-android-add"></i>
+          </button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+</body>
+</html>
